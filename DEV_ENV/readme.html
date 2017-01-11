@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<link rel="stylesheet" href="http://demo.neoblaster.fr/Files/prism_coy.css" type="text/css" media="screen">
+		
+		<script type="text/javascript" src="http://demo.neoblaster.fr/Files/suprismToEntities.js"></script>
+		<script type="text/javascript" src="http://demo.neoblaster.fr/Files/prism.js"></script>
+		<script type="text/javascript" src="NotifyMe.js"></script>
+		<script>
+			console.log = function(){
+				var output = document.querySelector('#console_output');
+				var message = '';
+				
+				for(var i = 0; i < console.log.arguments.length; i++){
+					message += ' '+console.log.arguments[i];
+				}
+				
+				message += "\n";
+				
+				var span = document.createElement('span');
+					span.textContent = message;
+					span.setAttribute('style', 'color: back');
+				
+				output.appendChild(span);
+			}
+			
+			console.warn = function(){
+				var output = document.querySelector('#console_output');
+				var message = '';
+				
+				for(var i = 0; i < console.warn.arguments.length; i++){
+					message += ' '+console.warn.arguments[i];
+				}
+				
+				message += "\n";
+				
+				var span = document.createElement('span');
+					span.textContent = message;
+					span.setAttribute('style', 'color: orange');
+				
+				output.appendChild(span);
+			}
+			console.error = function(){
+				var output = document.querySelector('#console_output');
+				var message = '';
+				
+				for(var i = 0; i < console.error.arguments.length; i++){
+					message += ' '+console.error.arguments[i];
+				}
+				
+				message += "\n";
+				
+				var span = document.createElement('span');
+					span.textContent = message;
+					span.setAttribute('style', 'color: red');
+				
+				output.appendChild(span);
+			}
+			
+			
+			var notifier;
+		</script>
+		<style>
+			*{
+				font-family: 'Calibri';
+			}
+			pre > span {
+				font-family: 'Consolas';
+			}
+			input {
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<h1>
+			Console:
+		</h1>
+		
+		<pre id="console_output"></pre>
+		
+		<input type="button" value="Clear Console" onclick="document.querySelector('#console_output').innerHTML = '';"/>
+		
+		<h2>
+			I. Initialize NotifyMe
+		</h2>
+		
+		<p>
+			Firt, you can create a new variable which will be a new instance of NotifyMe()
+		</p>
+		
+		<pre><code class="line-numbers language-php">
+		var notifier = new NotifyMe();
+		</code></pre>
+		
+		<input type="button" value="1. Initilization" onclick="notifier = new NotifyMe(); console.log('notifier initilized');"/>
+		
+		<h2>
+			II. Define Notification Title
+		</h2>
+		
+		<p>
+			To send a notification, you muse define a title :
+		</p>
+		
+		<pre><code class="line-numbers language-php">
+		notifier.title('Notification Title Here');
+		</code></pre>
+		
+		<input type="button" value="2. Set Notification Title" onclick="notifier.title('Notification Title Here'); console.log('Title defined');"/>
+		
+		<h2>
+			III. Define The Message (Body)
+		</h2>
+		
+		<p>
+			To send a notification, you muse define a messsage :
+		</p>
+		
+		<pre><code class="line-numbers language-php">
+		notifier.message('Notification message also call body');
+		</code></pre>
+		
+		<input type="button" value="3. Set Notification Message" onclick="notifier.message('Notification message also call body'); console.log('Message / Body defined');"/>
+		
+		<h2>
+			IV. Notification Options
+		</h2>
+		
+		<p>
+			You can send some options to configure your notification. To set options, just use the dedicated method :
+		</p>
+		
+		<p>
+			You can send a JSON object, or a String which respect the JSON Syntax.
+		</p>
+		
+		<p>
+			To learn more about options, you can use the embed method help !
+		</p>
+		
+		<pre><code class="line-numbers language-php">
+		notifier.options('{icon: "http://demo.neoblaster.fr/Files/Web-icon.png"}');
+		notifier.help();
+		</code></pre>
+		
+		<input type="button" value="4.1 Set Notification Options" onclick="notifier.options({icon: 'http://demo.neoblaster.fr/Files/Web-icon.png'}); console.log('Options setted');"/>
+		<input type="button" value="4.2 Show Available Options" onclick=" console.log('Below, the available options'); notifier.help();"/>
+		
+		<h2>
+			V. Define the display duration
+		</h2>
+		
+		<p>
+			You can custom the display duration of the notification with the close method. The parameter is the delay in milliseconds.
+		</p>
+		
+		<pre><code class="line-numbers language-php">
+		notifier.close(3000);
+		</code></pre>
+		
+		<input type="button" value="5.1. Time to live = 500" onclick="notifier.close(500); console.log('Time to live defined');"/>
+		<input type="button" value="5.2. Time to live = 1000" onclick="notifier.close(1000); console.log('Time to live defined');"/>
+		<input type="button" value="5.3. Time to live = 2000" onclick="notifier.close(2000); console.log('Time to live defined');"/>
+		<input type="button" value="5.4. Time to live = 3000" onclick="notifier.close(3000); console.log('Time to live defined');"/>
+		<input type="button" value="5.5. Time to live = 5000" onclick="notifier.close(5000); console.log('Time to live defined');"/>
+		
+		<h2>
+			VI. Send Notification
+		</h2>
+		
+		<p>
+			When all parameters are setted, you can send the notification. You you never trigger a notification, first, you will have a request to allow notifications.
+		</p>
+		
+		<pre><code class="line-numbers language-php">
+		notifier.send();
+		</code></pre>
+		
+		<input type="button" value="6. Send Notification" onclick="notifier.send();"/>
+		
+		<h2>
+			VII. Request Authorization without send a notification
+		</h2>
+		
+		<p>
+			If you want request an authorization without send a notification, you can with the request method :
+		</p>
+		
+		<pre><code class="line-numbers language-php">
+		notifier.request();
+		</code></pre>
+		
+		<input type="button" value="7. Only Request Authorization" onclick="notifier.request();"/>
+		
+		<h2>
+			VIII. Successive methods
+		</h2>
+		
+		<p>
+			The main interest of the JavaScript class it to call all methods consecutivly like that :
+		</p>
+		
+		<pre><code class="line-numbers language-php">
+		new NotifyMe().title('Notif Title - Consecutive call').message('Notif Message - Consecutive call').options({icon: 'http://demo.neoblaster.fr/Files/Web-icon.png'}).close(3000).send();
+		</code></pre>
+		
+		<input type="button" value="7.Trigger all previous method - One shot firing" onclick="new NotifyMe().title('Notif Title - Consecutive call').message('Notif Message - Consecutive call').options({icon: 'http://demo.neoblaster.fr/Files/Web-icon.png'}).close(3000).send();"/>
+	</body>
+</html>

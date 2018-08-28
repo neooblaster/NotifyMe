@@ -197,7 +197,24 @@
 		<input type="button" value="7. Only Request Authorization" onclick="notifier.request();"/>
 		
 		<h2>
-			VIII. Successive methods
+			VIII. Target
+		</h2>
+
+		<p>
+			The default behavior is to move the focus to the viewport of the notification's related browsing context.
+		</p>
+		<p>
+			You can change the target URL by a custom one with 'target' method :
+		</p>
+
+		<pre><code class="line-numbers language-php">
+		notifier.target('https://www.google.fr/');
+		</code></pre>
+
+        <input type="button" value="8. Set click target URL" onclick="notifier.target('https://www.google.fr/');"/>
+
+		<h2>
+			IX. Successive methods
 		</h2>
 		
 		<p>
@@ -208,6 +225,6 @@
 		new NotifyMe().title('Notif Title - Consecutive call').message('Notif Message - Consecutive call').options({icon: 'http://demo.neoblaster.fr/Files/Web-icon.png'}).close(3000).send();
 		</code></pre>
 		
-		<input type="button" value="7.Trigger all previous method - One shot firing" onclick="new NotifyMe().title('Notif Title - Consecutive call').message('Notif Message - Consecutive call').options({icon: 'http://demo.neoblaster.fr/Files/Web-icon.png'}).close(3000).send();"/>
+		<input type="button" value="9.Trigger all previous method - One shot firing" onclick="new NotifyMe().title('Notif Title - Consecutive call').message('Notif Message - Consecutive call').options({icon: 'http://demo.neoblaster.fr/Files/Web-icon.png'}).close(3000).send();"/>
 	</body>
 </html>

@@ -65,6 +65,7 @@ function NotifyMe(){
     self.notif_options = {};    // Options de configuration de la notification
     self.notif_ttl = null;      // Durée de vie de la notification
     self.notif_core = null;     // Instance de notification
+    self.notif_target = null;   // URL Cible
 
 
 
@@ -164,6 +165,13 @@ function NotifyMe(){
                             self.notif_options.body = self.notif_message;
                             
                             self.notif_core = new Notification(self.notif_title, self.notif_options);
+
+                            if (self.notif_target !== null) {
+                                self.notif_core.onclick = function(e) {
+                                    e.preventDefault();
+                                    window.open(self.notif_target);
+                                };
+                            }
                             
                             if(self.notif_ttl !== null && self.notif_ttl >= 0){
                                 setTimeout(self.notif_core.close.bind(self.notif_core), self.notif_ttl);
@@ -198,6 +206,17 @@ function NotifyMe(){
     self.title = function(title){
         self.notif_title = title;
         
+        return self;
+    };
+
+    /**
+     * Permet de définir l'URL cible lorsqu'on clic sur la notification.
+     *
+     * @param target
+     */
+    self.target = function(target) {
+        self.notif_target = target;
+
         return self;
     };
 

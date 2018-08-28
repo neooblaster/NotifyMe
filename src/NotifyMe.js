@@ -233,7 +233,7 @@ function NotifyMe(){
      *
      * @param {boolean} verbose
      */
-    self.verbose = function(verbose = true) {
+    self.verbose = function(verbose) {
         self.notif_verbose = verbose;
 
         return self;

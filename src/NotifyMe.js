@@ -9,16 +9,20 @@
 /** ---                                                                                                          --- **
 /** ---        RELEASE    : 28.08.2018                                                                           --- **
 /** ---                                                                                                          --- **
-/** ---        VERSION    : 1.1                                                                                  --- **
+/** ---        VERSION    : 1.2                                                                                  --- **
 /** ---                                                                                                          --- **
 /** ---                                                                                                          --- **
 /** ---                                        -----------------------------                                     --- **
 /** ---                                             { C H A N G E L O G }                                        --- **
 /** ---                                        -----------------------------                                     --- **
 /** ---                                                                                                          --- **
+/** ---        VERSION 1.2 : 28.08.2018                                                                          --- **
+/** ---        ------------------------                                                                          --- **
+/** ---            - Ajout d'un mode verbose (default: false)                                                    --- **
+/** ---                                                                                                          --- **
 /** ---        VERSION 1.1 : 28.08.2018                                                                          --- **
 /** ---        ------------------------                                                                          --- **
-/** ---            - Première release                                                                            --- **
+/** ---            - Ajout de la méthode target pour définir une URL cible                                       --- **
 /** ---                                                                                                          --- **
 /** ---        VERSION 1.0 : 20.12.2015                                                                          --- **
 /** ---        ------------------------                                                                          --- **
@@ -41,6 +45,7 @@
  
  
      new NotifyMe()
+     new NotifyMe().verbose(true)
      new NotifyMe().title('Titre')
      new NotifyMe().title('Titre').message('Message')
      new NotifyMe().title('Titre').message('Message').options({icon: '/path/to/icon'})
@@ -66,6 +71,7 @@ function NotifyMe(){
     self.notif_ttl = null;      // Durée de vie de la notification
     self.notif_core = null;     // Instance de notification
     self.notif_target = null;   // URL Cible
+    self.notif_verbose = false; // Doit afficher des messages dans la console ou non.
 
 
 
@@ -142,7 +148,9 @@ function NotifyMe(){
         if(Notification.permission !== 'granted'){
             Notification.requestPermission(callback);
         } else {
-            console.log("NotifyMe.request() no request for authorization, because it's already allowed.");
+            if (self.notif_verbose) console.log(
+                "NotifyMe.request() no request for authorization, because it's already allowed."
+            );
         }
     };
     
@@ -212,10 +220,21 @@ function NotifyMe(){
     /**
      * Permet de définir l'URL cible lorsqu'on clic sur la notification.
      *
-     * @param target
+     * @param {string} target
      */
     self.target = function(target) {
         self.notif_target = target;
+
+        return self;
+    };
+
+    /**
+     * Indique si le programme doit être verbeux
+     *
+     * @param {boolean} verbose
+     */
+    self.verbose = function(verbose = true) {
+        self.notif_verbose = verbose;
 
         return self;
     };
